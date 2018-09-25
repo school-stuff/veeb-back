@@ -29,9 +29,17 @@ springBoot {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
+
+	// JPA Data (We are going to use Repositories, Entities, Hibernate, etc...)
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Use MySQL Connector-J
+	compile 'mysql:mysql-connector-java'
+
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
 
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+
