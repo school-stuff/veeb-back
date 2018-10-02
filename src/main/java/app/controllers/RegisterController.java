@@ -34,14 +34,14 @@ public class RegisterController {
     ) throws ServletException {
 
         if (users.findByEmail(email) == null) {
-            return ResponseEntity.status(404).body("");
+            return ResponseEntity.status(400).body("");
             // TODO: correct error
         }
         User user = new User();
         user.setEmail(email);
         user.setPassword(hashPassword(password));
         users.save(user);
-        //request.login(email, password);
+        request.login(email, password);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
 
@@ -56,15 +56,19 @@ public class RegisterController {
             HttpServletRequest request
     ) {
         User user = users.findById(id);
-        if (user != null) {
-            //user.setDayOfBirth(LocalDate.parse(dateOfBirth));
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            if (trainer.equals("true")){
-                user.setTrainer(true);
-            }
-            users.persist(user);
+        if (user == null) {
+            return ResponseEntity.status(404).body("");
+            // TODO: correct error
         }
+        user.setDayOfBirth(LocalDate.parse(dateOfBirth));
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        if (trainer.equals("true")){
+            user.setTrainer(true);
+        } else if (trainer.equals("false")){
+            user.setTrainer(false);
+        }
+        users.persist(user);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
 
