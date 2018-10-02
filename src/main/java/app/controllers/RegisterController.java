@@ -63,11 +63,7 @@ public class RegisterController {
         user.setDayOfBirth(LocalDate.parse(dateOfBirth));
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        if (trainer.equals("true")){
-            user.setTrainer(true);
-        } else if (trainer.equals("false")){
-            user.setTrainer(false);
-        }
+        user.setTrainer(trainer.equals("true"));
         users.persist(user);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
