@@ -3,6 +3,8 @@ package app.controllers;
 import app.repositories.UserRepository;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,24 +27,27 @@ public class RegisterController {
 
     @PostMapping(value = "/register")
     @ResponseBody
-    public void saveUser(
+    public ResponseEntity saveUser(
             @RequestParam String email,
             @RequestParam String password,
             HttpServletRequest request
     ) throws ServletException {
-        User user = new User();
 
         if (users.findByEmail(email) == null) {
+            User user = new User();
             user.setEmail(email);
             user.setPassword(hashPassword(password));
+            users.save(user);
+            request.login(email, password);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
         }
-        users.save(user);
-        request.login(email, password);
+        return ResponseEntity.ok().body('0');
+
     }
 
-    @PostMapping(value = "/onboarding")
+    @PostMapping(value = "/update")
     @ResponseBody
-    public void addOnboardinFields(
+    public void upDateUser(
             @RequestParam String dateOfBirth,
             @RequestParam String firstName,
             @RequestParam String lastName,
@@ -57,7 +62,7 @@ public class RegisterController {
             if (trainer.equals("true")){
                 user.setTrainer(true);
             }
-            //TODO: save
+            users.persist(user);
         }
 
     }
