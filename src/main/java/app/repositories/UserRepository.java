@@ -1,5 +1,6 @@
-package app.db_test;
+package app.repositories;
 
+import app.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {

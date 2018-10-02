@@ -1,15 +1,14 @@
-package app.db_test;
+package app.controllers;
 
+import app.repositories.UserRepository;
+import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -24,8 +23,13 @@ public class RegisterController {
         this.users = userRepository;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void saveUser(@RequestParam String email, @RequestParam String password, HttpServletRequest request) throws ServletException {
+    @PostMapping(value = "/register")
+    @ResponseBody
+    public void saveUser(
+            @RequestParam String email,
+            @RequestParam String password,
+            HttpServletRequest request
+    ) throws ServletException {
         User user = new User();
 
         if (users.findByEmail(email) == null) {
@@ -36,10 +40,15 @@ public class RegisterController {
         request.login(email, password);
     }
 
-    @RequestMapping(value = "/onboarding", method = RequestMethod.POST)
-    public void addOnboardinFields(@RequestParam String dateOfBirth, @RequestParam String firstName,
-                                   @RequestParam String lastName, @RequestParam String trainer,
-                                   HttpServletRequest request) {
+    @PostMapping(value = "/onboarding")
+    @ResponseBody
+    public void addOnboardinFields(
+            @RequestParam String dateOfBirth,
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String trainer,
+            HttpServletRequest request
+    ) {
         User user = users.findByEmail(request.getRemoteUser());
         if (user != null) {
             user.setDayOfBirth(LocalDate.parse(dateOfBirth));
@@ -48,10 +57,10 @@ public class RegisterController {
             if (trainer.equals("true")){
                 user.setTrainer(true);
             }
+            //TODO: save
         }
-        users.save(user);
-    }
 
+    }
 
     private String hashPassword(String password) {
         String salt = BCrypt.gensalt();
