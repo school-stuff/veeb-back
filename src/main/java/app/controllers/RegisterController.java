@@ -47,7 +47,7 @@ public class RegisterController {
 
     @PostMapping(value = "/update/{id}")
     @ResponseBody
-    public void updateUser(
+    public ResponseEntity updateUser(
             @PathVariable int id,
             @RequestParam String dateOfBirth,
             @RequestParam String firstName,
@@ -57,7 +57,7 @@ public class RegisterController {
     ) {
         User user = users.findById(id);
         if (user != null) {
-            user.setDayOfBirth(LocalDate.parse(dateOfBirth));
+            //user.setDayOfBirth(LocalDate.parse(dateOfBirth));
             user.setFirstName(firstName);
             user.setLastName(lastName);
             if (trainer.equals("true")){
@@ -65,7 +65,7 @@ public class RegisterController {
             }
             users.persist(user);
         }
-
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
 
     private String hashPassword(String password) {
