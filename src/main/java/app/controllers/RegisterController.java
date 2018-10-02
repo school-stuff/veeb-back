@@ -34,27 +34,28 @@ public class RegisterController {
     ) throws ServletException {
 
         if (users.findByEmail(email) == null) {
-            User user = new User();
-            user.setEmail(email);
-            user.setPassword(hashPassword(password));
-            users.save(user);
-            request.login(email, password);
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
+            return ResponseEntity.status(404).body("");
+            // TODO: correct error
         }
-        return ResponseEntity.ok().body('0');
-
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(hashPassword(password));
+        users.save(user);
+        //request.login(email, password);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/{id}")
     @ResponseBody
-    public void upDateUser(
+    public void updateUser(
+            @PathVariable int id,
             @RequestParam String dateOfBirth,
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String trainer,
             HttpServletRequest request
     ) {
-        User user = users.findByEmail(request.getRemoteUser());
+        User user = users.findById(id);
         if (user != null) {
             user.setDayOfBirth(LocalDate.parse(dateOfBirth));
             user.setFirstName(firstName);
