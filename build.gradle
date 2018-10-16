@@ -24,6 +24,11 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+bootJar {
+	baseName = 'gs-rest-service-cors'
+	version =  '0.1.0'
+}
+
 repositories {
 	mavenCentral()
 }
@@ -51,7 +56,7 @@ dependencies {
 }
 
 flyway {
-    url = 'jdbc:mysql://localhost:3306/veeb'
+    url = 'jdbc:mysql://localhost:3306/veeb2018'
     user = 'root'
-    password = 'veeb123'
+    password = 'AKSAdmin123.'
 }

@@ -1,22 +1,24 @@
 package app.models;
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
+@Table(name="user")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String email;
 
     private boolean isTrainer;
+
+    public String getPassword() {
+        return password;
+    }
 
     private String password;
 
@@ -36,6 +38,7 @@ public class User {
     @PrePersist
     protected void onCreate(){
         createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
     }
 
     @PreUpdate
@@ -117,5 +120,12 @@ public class User {
 
     public void setCreatedAt() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "User[id=%d, firstName='%s', lastName='%s', email='%s']",
+                id, firstName, lastName, email);
     }
 }

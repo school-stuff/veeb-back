@@ -18,53 +18,57 @@ import java.time.LocalDate;
 @RequestMapping
 public class RegisterController {
 
-    private final UserRepository users;
+    private final UserRepository userRepo;
 
     @Autowired
     public RegisterController(UserRepository userRepository) {
-        this.users = userRepository;
+        this.userRepo = userRepository;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/register")
     @ResponseBody
     public ResponseEntity saveUser(
-            @RequestParam String email,
-            @RequestParam String password,
+            @RequestBody RegisterForm registerForm,
             HttpServletRequest request
     ) throws ServletException {
+        String email = registerForm.email;
+        String password = registerForm.password;
 
-        if (users.findByEmail(email) == null) {
-            return ResponseEntity.status(400).body("");
-            // TODO: correct error
+        if (userRepo.findByEmail(registerForm.email) != null) {
+            return ResponseEntity.status(400).body("A user with the given email already exists.");
         }
         User user = new User();
         user.setEmail(email);
         user.setPassword(hashPassword(password));
-        users.save(user);
+        System.out.println(user);
+        userRepo.save(user);
         request.login(email, password);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(registerForm);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/update/{id}")
     @ResponseBody
     public ResponseEntity updateUser(
             @PathVariable int id,
-            @RequestParam String dateOfBirth,
-            @RequestParam String firstName,
-            @RequestParam String lastName,
-            @RequestParam String trainer,
+            @RequestBody UserForm userForm,
             HttpServletRequest request
     ) {
-        User user = users.findById(id);
+        String dateOfBirth = userForm.dateOfBirth;
+        String firstName = userForm.firstName;
+        String lastName = userForm.lastName;
+        boolean trainer = userForm.trainer;
+
+        User user = userRepo.findById(id);
         if (user == null) {
-            return ResponseEntity.status(404).body("");
-            // TODO: correct error
+            return ResponseEntity.status(404).body("User of id %s does not exist." + id);
         }
         user.setDayOfBirth(LocalDate.parse(dateOfBirth));
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setTrainer(trainer.equals("true"));
-        users.persist(user);
+        user.setTrainer(trainer);
+        userRepo.persist(user);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(user);
     }
 

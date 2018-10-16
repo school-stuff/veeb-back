@@ -4,6 +4,7 @@ import app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,6 +20,7 @@ public class LoginController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity handleLogin(String email, String password, HttpServletRequest request) throws ServletException {
         request.login(email, password);
