@@ -41,7 +41,6 @@ public class RegisterController {
         User user = new User();
         user.setEmail(email);
         user.setPassword(hashPassword(password));
-        System.out.println(user);
         userRepo.save(user);
         request.login(email, password);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(registerForm);
@@ -62,7 +61,7 @@ public class RegisterController {
 
         User user = userRepo.findById(id);
         if (user == null) {
-            return ResponseEntity.status(404).body("User of id %s does not exist." + id);
+            return ResponseEntity.status(404).body(String.format("User of id %s does not exist.", id));
         }
         user.setDayOfBirth(LocalDate.parse(dateOfBirth));
         user.setFirstName(firstName);

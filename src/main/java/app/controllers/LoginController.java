@@ -4,13 +4,15 @@ import app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+
+@Controller
+@RequestMapping
 public class LoginController {
     private final UserRepository users;
 
@@ -21,14 +23,19 @@ public class LoginController {
 
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity handleLogin(String email, String password, HttpServletRequest request) throws ServletException {
+    @PostMapping(value = "/login")
+    @ResponseBody
+    public ResponseEntity handleLogin(
+            @RequestBody RegisterForm registerForm,
+            HttpServletRequest request) throws ServletException {
+        String email = registerForm.email;
+        String password = registerForm.password;
         request.login(email, password);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(users.findByEmail(email));
     }
 
-
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping(value = "/logout")
     public void logOut(HttpServletRequest request) throws ServletException {
         request.logout();
     }

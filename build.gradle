@@ -56,7 +56,7 @@ dependencies {
 }
 
 flyway {
-    url = 'jdbc:mysql://localhost:3306/veeb2018'
-    user = 'root'
-    password = 'AKSAdmin123.'
+    url = project.ext['spring.flyway.url']
+    user = project.ext['spring.flyway.username']
+    password = project.ext['spring.flyway.password']
 }
