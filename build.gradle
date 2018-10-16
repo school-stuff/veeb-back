@@ -7,7 +7,12 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'mysql:mysql-connector-java:8.0.12'
 	}
+}
+
+plugins {
+	id 'org.flywaydb.flyway' version '5.2.0'
 }
 
 apply plugin: 'java'
@@ -23,6 +28,7 @@ repositories {
 	mavenCentral()
 }
 
+
 springBoot {
 	mainClassName = 'app.Application'
 }
@@ -32,8 +38,10 @@ dependencies {
 
 	// JPA Data (We are going to use Repositories, Entities, Hibernate, etc...)
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// Use MySQL Connector-J
-	compile 'mysql:mysql-connector-java'
+	// Flyway will be used to migrate database
+	compile 'org.flywaydb:flyway-core:5.2.0'
+    // Use MySQL Connector-J
+	compile 'mysql:mysql-connector-java:8.0.12'
 
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -42,4 +50,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-
+flyway {
+    url = 'jdbc:mysql://localhost:3306/veeb'
+    user = 'root'
+    password = 'veeb123'
+}
