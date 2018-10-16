@@ -1,5 +1,5 @@
 # keep this on validate as flyway will be used to migrate but errors might still be wanted
-spring.jpa.hibernate.ddl-auto=validate
-spring.datasource.url=jdbc:mysql://localhost:3306/veeb2018
-spring.datasource.username=root
-spring.datasource.password=example
+spring.jpa.hibernate.ddl-auto = validate
+spring.datasource.url = jdbc:mysql://localhost:3306/veeb2018
+spring.datasource.username = root
+spring.datasource.password = example
