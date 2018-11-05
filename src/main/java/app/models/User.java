@@ -33,6 +33,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    public String getPassword() {
+        return password;
+    }
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -57,6 +61,10 @@ public class User {
         this.email = email;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -75,6 +83,14 @@ public class User {
 
     public void setDayOfBirth(LocalDate dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
