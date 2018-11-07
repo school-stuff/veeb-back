@@ -1,4 +1,4 @@
-package app.controllers;
+package app.controllers.forms;
 
 public class RegisterForm {
     public String email;

@@ -26,6 +26,9 @@ public class Training {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "weeks")
     private String weeks;
 
@@ -50,7 +53,79 @@ public class Training {
     @Override
     public String toString() {
         return String.format(
-                "Training[id=%d, name='%s', owner='%s']",
-                id, name, owner.getId());
+                "Training[id=%d, name='%s']",
+                id, name);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getWeeks() {
+        return weeks;
+    }
+
+    public Integer getTimesPerWeek() {
+        return timesPerWeek;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeeks(String weeks) {
+        this.weeks = weeks;
+    }
+
+    public void setTimesPerWeek(Integer timesPerWeek) {
+        this.timesPerWeek = timesPerWeek;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

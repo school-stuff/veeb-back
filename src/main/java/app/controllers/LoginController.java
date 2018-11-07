@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.controllers.forms.RegisterForm;
 import app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

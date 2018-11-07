@@ -1,6 +1,4 @@
-package app.controllers;
-
-import java.util.Date;
+package app.controllers.forms;
 
 public class UserForm {
     public String dateOfBirth;

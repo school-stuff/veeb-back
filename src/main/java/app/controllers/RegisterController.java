@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.controllers.forms.RegisterForm;
+import app.controllers.forms.UserForm;
 import app.models.User;
 import app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
