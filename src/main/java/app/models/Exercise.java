@@ -26,6 +26,9 @@ public class Exercise {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     /**
      * It's going to be ManyToOne classification_id later on.
      *
@@ -54,5 +57,37 @@ public class Exercise {
         return String.format(
                 "Exercise[id=%d, name='%s', owner='%s']",
                 id, name, owner.getId());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
