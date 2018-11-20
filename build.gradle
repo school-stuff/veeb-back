@@ -57,10 +57,10 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-/*
+
 flyway {
     url = project.ext['spring.flyway.url']
     user = project.ext['spring.flyway.username']
     password = project.ext['spring.flyway.password']
 }
-*/
+
